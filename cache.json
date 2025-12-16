@@ -490,5 +490,23 @@
     "success": true,
     "full_name": "술갱🍺🍶🥂🍾🥃🍸🍷",
     "is_private": false
+  },
+  "soso0sun": {
+    "username": "soso0sun",
+    "success": true,
+    "full_name": "영선",
+    "is_private": false
+  },
+  "k_inwha": {
+    "username": "k_inwha",
+    "success": true,
+    "full_name": "이놔",
+    "is_private": true
+  },
+  "spontaneouswee": {
+    "username": "spontaneouswee",
+    "success": true,
+    "full_name": "-",
+    "is_private": true
   }
 }
