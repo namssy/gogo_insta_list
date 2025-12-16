@@ -417,8 +417,9 @@ def main():
     # 목록 로드
     target_list = load_users("users.txt")
     sponsors_list = load_users("sponsors.txt")
+    developers_list = load_users("developers.txt")
     
-    print(f"\n📋 사용자: {len(target_list)}명 / 협찬사: {len(sponsors_list)}곳\n")
+    print(f"\n📋 사용자: {len(target_list)}명 / 협찬사: {len(sponsors_list)}곳 / 개발자: {len(developers_list)}명\n")
     
     # Instaloader 인스턴스 생성 (로그인 없이)
     L = instaloader.Instaloader()
@@ -459,14 +460,24 @@ def main():
         if i < len(target_list) and not is_cached:
             time.sleep(5)
     
-    # 개발자 정보 수집 (하드코딩)
+    # 개발자 정보 수집
     print("\n[3] 개발자 정보 수집 중...")
-    dev_info, _ = fetch_user_data('yeoriyeori', L, assets_dir, cache, cache_file)
-    developer_data = [dev_info]
+    developer_data = []
+    for i, username in enumerate(developers_list, 1):
+        print(f"[{i}/{len(developers_list)}] {username} 처리 중...")
+        info, is_cached = fetch_user_data(username, L, assets_dir, cache, cache_file)
+        developer_data.append(info)
+        if i < len(developers_list) and not is_cached:
+            time.sleep(5)
 
     # HTML 생성
     print("\n📝 HTML 파일 생성 중...")
-    html_content = generate_html(developer_data, users_data, sponsors_data, len(target_list) + len(sponsors_list))
+    
+    # 개발자를 참여자 목록의 맨 앞에 추가
+    final_users_data = developer_data + users_data
+    total_count = len(target_list) + len(sponsors_list) + len(developers_list)
+    
+    html_content = generate_html(developer_data, final_users_data, sponsors_data, total_count)
     
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html_content)
