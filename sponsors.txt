@@ -1,0 +1,29 @@
+# 협찬사 목록 (한 줄에 하나씩 인스타그램 아이디 입력)
+# @는 있어도 되고 없어도 됩니다.
+
+@wavely_studio
+@heekit.kr
+@insta360kr
+@undone.kr
+@garmin_korea
+@laserin_swim
+@intotheblue_store
+@deepvibe_official
+@c4korea
+@pongdang_com
+@areyou.readytokick
+@paditv
+@deepstation.kr
+@hanaplaza_korea
+@looploop.official
+@apnea_korea
+@keelow_official
+@getbarrel.official
+@lemangokorea
+@branciiia
+@bushman_life
+@aurora_spread
+@kwangdong_official
+@red_kr.official
+@dperfreedive
+# 주석은 #으로 시작

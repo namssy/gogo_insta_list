@@ -68,11 +68,92 @@ def create_default_image(assets_dir: str):
     print("  └─ 완료!")
 
 
-def generate_html(users_data: list[dict], total_count: int) -> str:
+
+def fetch_user_data(username: str, L: instaloader.Instaloader, assets_dir: str, cache: dict, cache_file: str) -> dict:
+    """단일 사용자 정보를 가져오거나 캐시에서 로드합니다."""
+    user_info = {
+        "username": username,
+        "success": False,
+        "full_name": "",
+        "is_private": False,
+    }
+    
+    # 캐시 확인
+    if username in cache:
+        # 이미지 파일도 실제로 존재하는지 확인
+        img_path = os.path.join(assets_dir, f"{username}.jpg")
+        if os.path.exists(img_path) or cache[username].get('success') is False:
+             print(f"  └─ 📦 캐시 사용")
+             return cache[username]
+    
+    try:
+        # 프로필 정보 가져오기
+        profile = instaloader.Profile.from_username(L.context, username)
+        
+        user_info["success"] = True
+        user_info["full_name"] = profile.full_name
+        user_info["is_private"] = profile.is_private
+        
+        # 프로필 사진 다운로드 (이미 존재하면 스킵)
+        img_path = os.path.join(assets_dir, f"{username}.jpg")
+        if os.path.exists(img_path):
+            print(f"  └─ ✅ 성공 (이미지 이미 존재)")
+        elif download_image(profile.profile_pic_url, img_path):
+            print(f"  └─ ✅ 성공 (이미지 저장됨)")
+        else:
+            print(f"  └─ ✅ 성공 (이미지 저장 실패, 기본 이미지 사용)")
+        
+    except Exception as e:
+        print(f"  └─ ❌ 실패: {str(e)[:50]}")
+    
+    # 캐시 업데이트 및 저장
+    cache[username] = user_info
+    
+    # 중간 저장 (실행 중단 대비)
+    try:
+        import json
+        with open(cache_file, "w", encoding="utf-8") as f:
+            json.dump(cache, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f"  ⚠️ 캐시 저장 실패: {e}")
+        
+    return user_info
+
+
+def generate_html(users_data: list[dict], sponsors_data: list[dict], total_count: int) -> str:
     """HTML 컨텐츠를 생성합니다."""
     
     now = datetime.now().strftime("%Y-%m-%d %H:%M")
     
+    # 사용자 카드 HTML 생성 헬퍼 함수
+    def create_user_cards(data_list):
+        cards_html = ""
+        for user in data_list:
+            if user["success"]:
+                privacy_tag = '<span class="private-tag">🔒 비공개</span>' if user["is_private"] else '<span class="public-tag">🌏 공개</span>'
+                cards_html += f"""
+                <div class="user-card">
+                    <img src="assets/{user['username']}.jpg" onerror="this.src='assets/default.svg'" alt="{user['username']}">
+                    <div class="info">
+                        <div class="username">{user['username']} {privacy_tag}</div>
+                        <div class="fullname">{user['full_name'] or '-'}</div>
+                    </div>
+                    <a href="https://www.instagram.com/{user['username']}/" target="_blank" rel="noopener" class="btn">팔로우</a>
+                </div>
+    """
+            else:
+                cards_html += f"""
+                <div class="user-card failed">
+                    <img src="assets/default.svg" alt="{user['username']}">
+                    <div class="info">
+                        <div class="username">{user['username']} <span class="failed-tag">⚠️ 조회 실패</span></div>
+                        <div class="fullname">정보를 가져올 수 없습니다</div>
+                    </div>
+                    <a href="https://www.instagram.com/{user['username']}/" target="_blank" rel="noopener" class="btn disabled">확인</a>
+                </div>
+    """
+        return cards_html
+
     html = f"""<!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -117,6 +198,16 @@ def generate_html(users_data: list[dict], total_count: int) -> str:
         header p {{
             font-size: 0.9rem;
             opacity: 0.9;
+        }}
+        
+        .section-title {{
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 30px 0 15px;
+            padding-left: 10px;
+            border-left: 4px solid #fff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }}
         
         .stats {{
@@ -261,39 +352,21 @@ def generate_html(users_data: list[dict], total_count: int) -> str:
             <h1>🚀 팔로우 필요 목록</h1>
             <p>마지막 업데이트: {now}</p>
             <div class="stats">
-                <div class="stat-item">총 {total_count}명</div>
+                <div class="stat-item">전체 {total_count}명</div>
+                <div class="stat-item">협찬사 {len(sponsors_data)}곳</div>
             </div>
         </header>
         
+        <!-- 협찬사 섹션 -->
+        <h2 class="section-title">🤝 협찬사 ({len(sponsors_data)})</h2>
         <div class="user-list">
-"""
-    
-    for user in users_data:
-        if user["success"]:
-            privacy_tag = '<span class="private-tag">🔒 비공개</span>' if user["is_private"] else '<span class="public-tag">🌏 공개</span>'
-            html += f"""
-            <div class="user-card">
-                <img src="assets/{user['username']}.jpg" onerror="this.src='assets/default.svg'" alt="{user['username']}">
-                <div class="info">
-                    <div class="username">{user['username']} {privacy_tag}</div>
-                    <div class="fullname">{user['full_name'] or '-'}</div>
-                </div>
-                <a href="https://www.instagram.com/{user['username']}/" target="_blank" rel="noopener" class="btn">팔로우</a>
-            </div>
-"""
-        else:
-            html += f"""
-            <div class="user-card failed">
-                <img src="assets/default.svg" alt="{user['username']}">
-                <div class="info">
-                    <div class="username">{user['username']} <span class="failed-tag">⚠️ 조회 실패</span></div>
-                    <div class="fullname">정보를 가져올 수 없습니다</div>
-                </div>
-                <a href="https://www.instagram.com/{user['username']}/" target="_blank" rel="noopener" class="btn disabled">확인</a>
-            </div>
-"""
-    
-    html += """
+            {create_user_cards(sponsors_data)}
+        </div>
+
+        <!-- 일반 참여자 섹션 -->
+        <h2 class="section-title">👥 참여자 목록 ({len(users_data)})</h2>
+        <div class="user-list">
+            {create_user_cards(users_data)}
         </div>
         
         <footer>
@@ -303,7 +376,6 @@ def generate_html(users_data: list[dict], total_count: int) -> str:
 </body>
 </html>
 """
-    
     return html
 
 
@@ -319,14 +391,11 @@ def main():
     # 기본 이미지 준비
     create_default_image(assets_dir)
     
-    # 사용자 목록 로드
+    # 목록 로드
     target_list = load_users("users.txt")
+    sponsors_list = load_users("sponsors.txt")
     
-    if not target_list:
-        print("❌ 확인할 사용자가 없습니다. users.txt 파일을 확인해주세요.")
-        return
-    
-    print(f"\n📋 총 {len(target_list)}명의 사용자를 확인합니다.\n")
+    print(f"\n📋 사용자: {len(target_list)}명 / 협찬사: {len(sponsors_list)}곳\n")
     
     # Instaloader 인스턴스 생성 (로그인 없이)
     L = instaloader.Instaloader()
@@ -345,77 +414,42 @@ def main():
             cache = {}
 
     users_data = []
+    sponsors_data = []
     
+    # 협찬사 처리
+    print("\n[1] 협찬사 정보 수집 중...")
+    for i, username in enumerate(sponsors_list, 1):
+        print(f"[{i}/{len(sponsors_list)}] {username} 처리 중...")
+        info = fetch_user_data(username, L, assets_dir, cache, cache_file)
+        sponsors_data.append(info)
+        time.sleep(2) # 짧은 대기
+
+    # 사용자 처리
+    print("\n[2] 사용자 정보 수집 중...")
     for i, username in enumerate(target_list, 1):
         print(f"[{i}/{len(target_list)}] {username} 처리 중...")
+        info = fetch_user_data(username, L, assets_dir, cache, cache_file)
+        users_data.append(info)
         
-        user_info = {
-            "username": username,
-            "success": False,
-            "full_name": "",
-            "is_private": False,
-        }
-        
-        # 캐시 확인
-        if username in cache:
-            # 이미지 파일도 실제로 존재하는지 확인
-            img_path = os.path.join(assets_dir, f"{username}.jpg")
-            if os.path.exists(img_path) or cache[username].get('success') is False:
-                 print(f"  └─ 📦 캐시 사용")
-                 users_data.append(cache[username])
-                 continue
-        
-        try:
-            # 프로필 정보 가져오기
-            profile = instaloader.Profile.from_username(L.context, username)
-            
-            user_info["success"] = True
-            user_info["full_name"] = profile.full_name
-            user_info["is_private"] = profile.is_private
-            
-            # 프로필 사진 다운로드 (이미 존재하면 스킵)
-            img_path = os.path.join(assets_dir, f"{username}.jpg")
-            if os.path.exists(img_path):
-                print(f"  └─ ✅ 성공 (이미지 이미 존재)")
-            elif download_image(profile.profile_pic_url, img_path):
-                print(f"  └─ ✅ 성공 (이미지 저장됨)")
-            else:
-                print(f"  └─ ✅ 성공 (이미지 저장 실패, 기본 이미지 사용)")
-            
-        except Exception as e:
-            print(f"  └─ ❌ 실패: {str(e)[:50]}")
-        
-        # 캐시 업데이트 및 저장
-        users_data.append(user_info)
-        cache[username] = user_info
-        
-        # 중간 저장 (실행 중단 대비)
-        try:
-            import json
-            with open(cache_file, "w", encoding="utf-8") as f:
-                json.dump(cache, f, ensure_ascii=False, indent=2)
-        except Exception as e:
-            print(f"  ⚠️ 캐시 저장 실패: {e}")
-        
-        # Rate limit 방지를 위한 딜레이 (마지막 요청 후에는 불필요)
+        # 마지막 요청이 아니면 대기
         if i < len(target_list):
             time.sleep(3)
     
     # HTML 생성
     print("\n📝 HTML 파일 생성 중...")
-    html_content = generate_html(users_data, len(target_list))
+    html_content = generate_html(users_data, sponsors_data, len(target_list) + len(sponsors_list))
     
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html_content)
     
     # 결과 요약
-    success_count = sum(1 for u in users_data if u["success"])
-    fail_count = len(users_data) - success_count
+    total_success = sum(1 for u in users_data if u["success"]) + sum(1 for s in sponsors_data if s["success"])
+    total_fail = (len(users_data) + len(sponsors_data)) - total_success
     
     print("\n" + "=" * 50)
     print("✨ 완료!")
-    print(f"   - 성공: {success_count}명")
-    print(f"   - 실패: {fail_count}명")
+    print(f"   - 성공: {total_success}명")
+    print(f"   - 실패: {total_fail}명")
     print(f"   - 결과 파일: index.html")
     print(f"   - 이미지 폴더: {assets_dir}/")
     print("=" * 50)
