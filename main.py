@@ -377,6 +377,12 @@ def generate_html(developer_data: list[dict], users_data: list[dict], sponsors_d
         <div class="lists-wrapper">
 
             <div class="list-section">
+                <!-- 개발자 섹션 -->
+                <h2 class="section-title">👨‍💻 개발자 ({len(developer_data)})</h2>
+                <div class="user-list">
+                    {create_user_cards(developer_data)}
+                </div>
+
                 <!-- 협찬사 섹션 -->
                 <h2 class="section-title">🤝 협찬사 ({len(sponsors_data)})</h2>
                 <div class="user-list">
@@ -473,11 +479,9 @@ def main():
     # HTML 생성
     print("\n📝 HTML 파일 생성 중...")
     
-    # 개발자를 참여자 목록의 맨 앞에 추가
-    final_users_data = developer_data + users_data
     total_count = len(target_list) + len(sponsors_list) + len(developers_list)
     
-    html_content = generate_html(developer_data, final_users_data, sponsors_data, total_count)
+    html_content = generate_html(developer_data, users_data, sponsors_data, total_count)
     
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html_content)
