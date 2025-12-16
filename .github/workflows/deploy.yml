@@ -6,9 +6,9 @@ on:
       - main
   workflow_dispatch:  # 수동 실행 지원
 
-# GitHub Pages 배포 권한 및 커밋 권한 설정
+# GitHub Pages 배포 권한 설정
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -27,29 +27,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-          cache: 'pip'
-
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-
-      - name: Run crawler
-        run: |
-          python main.py
-
-      - name: Commit and Push changes
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add cache.json assets/ index.html
-          # 변경사항이 있을 때만 커밋 (실패 방지)
-          git commit -m "Update crawler data [skip ci]" || exit 0
-          git push
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

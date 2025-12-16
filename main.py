@@ -82,7 +82,8 @@ def fetch_user_data(username: str, L: instaloader.Instaloader, assets_dir: str, 
     if username in cache:
         # 이미지 파일도 실제로 존재하는지 확인
         img_path = os.path.join(assets_dir, f"{username}.jpg")
-        if os.path.exists(img_path) or cache[username].get('success') is False:
+        # 성공했던 기록(success is True)이고 이미지가 있는 경우만 캐시 사용 (실패했던 건은 재시도)
+        if cache[username].get('success') is True and os.path.exists(img_path):
              print(f"  └─ 📦 캐시 사용")
              return cache[username]
     
@@ -422,7 +423,7 @@ def main():
         print(f"[{i}/{len(sponsors_list)}] {username} 처리 중...")
         info = fetch_user_data(username, L, assets_dir, cache, cache_file)
         sponsors_data.append(info)
-        time.sleep(2) # 짧은 대기
+        time.sleep(5) # 짧은 대기
 
     # 사용자 처리
     print("\n[2] 사용자 정보 수집 중...")
@@ -433,7 +434,7 @@ def main():
         
         # 마지막 요청이 아니면 대기
         if i < len(target_list):
-            time.sleep(3)
+            time.sleep(5)
     
     # HTML 생성
     print("\n📝 HTML 파일 생성 중...")
