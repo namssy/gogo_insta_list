@@ -124,5 +124,185 @@
     "success": true,
     "full_name": "민슈🌸",
     "is_private": false
+  },
+  "wavely_studio": {
+    "username": "wavely_studio",
+    "success": true,
+    "full_name": "웨이블리 wavely",
+    "is_private": false
+  },
+  "heekit.kr": {
+    "username": "heekit.kr",
+    "success": true,
+    "full_name": "히킷 heekit",
+    "is_private": false
+  },
+  "insta360kr": {
+    "username": "insta360kr",
+    "success": true,
+    "full_name": "인스타360 코리아 공식 계정",
+    "is_private": false
+  },
+  "undone.kr": {
+    "username": "undone.kr",
+    "success": true,
+    "full_name": "언던 UNDONE",
+    "is_private": false
+  },
+  "garmin_korea": {
+    "username": "garmin_korea",
+    "success": true,
+    "full_name": "[공식] 가민코리아 | Garmin Korea",
+    "is_private": false
+  },
+  "laserin_swim": {
+    "username": "laserin_swim",
+    "success": true,
+    "full_name": "LASERIN 라세린 수영복",
+    "is_private": false
+  },
+  "intotheblue_store": {
+    "username": "intotheblue_store",
+    "success": true,
+    "full_name": "인투더블루 스토어 | 수중 장비 멀티샵",
+    "is_private": false
+  },
+  "deepvibe_official": {
+    "username": "deepvibe_official",
+    "success": true,
+    "full_name": "딥바이브 - 하이앤드 다이빙 기어",
+    "is_private": false
+  },
+  "c4korea": {
+    "username": "c4korea",
+    "success": true,
+    "full_name": "C4carbon Korea, First Cabon Fin maker in 1990",
+    "is_private": false
+  },
+  "pongdang_com": {
+    "username": "pongdang_com",
+    "success": true,
+    "full_name": "퐁당닷컴(pongdang.com)",
+    "is_private": false
+  },
+  "areyou.readytokick": {
+    "username": "areyou.readytokick",
+    "success": true,
+    "full_name": "레디투킥 READY TO KICK",
+    "is_private": false
+  },
+  "paditv": {
+    "username": "paditv",
+    "success": true,
+    "full_name": "PADI",
+    "is_private": false
+  },
+  "deepstation.kr": {
+    "username": "deepstation.kr",
+    "success": true,
+    "full_name": "딥스테이션 / deepstation",
+    "is_private": false
+  },
+  "hanaplaza_korea": {
+    "username": "hanaplaza_korea",
+    "success": true,
+    "full_name": "Hana Plaza (주)하나프라자",
+    "is_private": false
+  },
+  "looploop.official": {
+    "username": "looploop.official",
+    "success": true,
+    "full_name": "루프루프 𝐋𝐎𝐎𝐏𝗟𝗢𝗢𝗣",
+    "is_private": false
+  },
+  "apnea_korea": {
+    "username": "apnea_korea",
+    "success": true,
+    "full_name": "프리다이빙슈트 l 압네아코리아 l Made in Greece",
+    "is_private": false
+  },
+  "keelow_official": {
+    "username": "keelow_official",
+    "success": true,
+    "full_name": "키로우",
+    "is_private": false
+  },
+  "getbarrel.official": {
+    "username": "getbarrel.official",
+    "success": true,
+    "full_name": "BARREL | 배럴 공식 인스타그램",
+    "is_private": false
+  },
+  "lemangokorea": {
+    "username": "lemangokorea",
+    "success": true,
+    "full_name": "르망고 LEMANGO",
+    "is_private": false
+  },
+  "branciiia": {
+    "username": "branciiia",
+    "success": true,
+    "full_name": "BRANCIIIA 브랑키아",
+    "is_private": false
+  },
+  "bushman_life": {
+    "username": "bushman_life",
+    "success": true,
+    "full_name": "부쉬맨",
+    "is_private": false
+  },
+  "aurora_spread": {
+    "username": "aurora_spread",
+    "success": true,
+    "full_name": "오로라 스프레드",
+    "is_private": false
+  },
+  "kwangdong_official": {
+    "username": "kwangdong_official",
+    "success": true,
+    "full_name": "광동제약",
+    "is_private": false
+  },
+  "red_kr.official": {
+    "username": "red_kr.official",
+    "success": true,
+    "full_name": "레드 코리아 RED KOREA",
+    "is_private": false
+  },
+  "dperfreedive": {
+    "username": "dperfreedive",
+    "success": true,
+    "full_name": "제주프리다이빙ㅣ디퍼프리다이브ㅣAIDA",
+    "is_private": false
+  },
+  "hobipobi2": {
+    "username": "hobipobi2",
+    "success": true,
+    "full_name": "호비",
+    "is_private": false
+  },
+  "yooohyejin": {
+    "username": "yooohyejin",
+    "success": true,
+    "full_name": "𝙃𝙔𝙀𝙅𝙄𝙉",
+    "is_private": false
+  },
+  "chanmi8809": {
+    "username": "chanmi8809",
+    "success": true,
+    "full_name": "chanmi",
+    "is_private": false
+  },
+  "sch.o97": {
+    "username": "sch.o97",
+    "success": true,
+    "full_name": "조성호",
+    "is_private": true
+  },
+  "ye_ram_21": {
+    "username": "ye_ram_21",
+    "success": true,
+    "full_name": "박예람",
+    "is_private": false
   }
 }

@@ -69,8 +69,8 @@ def create_default_image(assets_dir: str):
 
 
 
-def fetch_user_data(username: str, L: instaloader.Instaloader, assets_dir: str, cache: dict, cache_file: str) -> dict:
-    """단일 사용자 정보를 가져오거나 캐시에서 로드합니다."""
+def fetch_user_data(username: str, L: instaloader.Instaloader, assets_dir: str, cache: dict, cache_file: str) -> tuple[dict, bool]:
+    """단일 사용자 정보를 가져오거나 캐시에서 로드합니다. (반환값: 정보 dict, 캐시사용여부 bool)"""
     user_info = {
         "username": username,
         "success": False,
@@ -85,7 +85,7 @@ def fetch_user_data(username: str, L: instaloader.Instaloader, assets_dir: str, 
         # 성공했던 기록(success is True)이고 이미지가 있는 경우만 캐시 사용 (실패했던 건은 재시도)
         if cache[username].get('success') is True and os.path.exists(img_path):
              print(f"  └─ 📦 캐시 사용")
-             return cache[username]
+             return cache[username], True
     
     try:
         # 프로필 정보 가져오기
@@ -118,7 +118,7 @@ def fetch_user_data(username: str, L: instaloader.Instaloader, assets_dir: str, 
     except Exception as e:
         print(f"  ⚠️ 캐시 저장 실패: {e}")
         
-    return user_info
+    return user_info, False
 
 
 def generate_html(users_data: list[dict], sponsors_data: list[dict], total_count: int) -> str:
@@ -421,19 +421,20 @@ def main():
     print("\n[1] 협찬사 정보 수집 중...")
     for i, username in enumerate(sponsors_list, 1):
         print(f"[{i}/{len(sponsors_list)}] {username} 처리 중...")
-        info = fetch_user_data(username, L, assets_dir, cache, cache_file)
+        info, is_cached = fetch_user_data(username, L, assets_dir, cache, cache_file)
         sponsors_data.append(info)
-        time.sleep(5) # 짧은 대기
+        if not is_cached:
+            time.sleep(5) # 캐시가 아닐 때만 대기
 
     # 사용자 처리
     print("\n[2] 사용자 정보 수집 중...")
     for i, username in enumerate(target_list, 1):
         print(f"[{i}/{len(target_list)}] {username} 처리 중...")
-        info = fetch_user_data(username, L, assets_dir, cache, cache_file)
+        info, is_cached = fetch_user_data(username, L, assets_dir, cache, cache_file)
         users_data.append(info)
         
-        # 마지막 요청이 아니면 대기
-        if i < len(target_list):
+        # 마지막 요청이 아니면 대기 (캐시 미사용 시에만)
+        if i < len(target_list) and not is_cached:
             time.sleep(5)
     
     # HTML 생성
