@@ -179,7 +179,7 @@ def generate_html(developer_data: list[dict], users_data: list[dict], sponsors_d
         }}
         
         .container {{
-            max-width: 600px;
+            max-width: 1000px;
             margin: 0 auto;
         }}
         
@@ -201,6 +201,16 @@ def generate_html(developer_data: list[dict], users_data: list[dict], sponsors_d
             opacity: 0.9;
         }}
         
+        .lists-wrapper {{
+            display: flex; 
+            gap: 30px;
+        }}
+
+        .list-section {{
+            flex: 1;
+            min-width: 0;
+        }}
+
         .section-title {{
             color: white;
             font-size: 1.2rem;
@@ -330,6 +340,12 @@ def generate_html(developer_data: list[dict], users_data: list[dict], sponsors_d
             font-size: 0.8rem;
         }}
         
+        @media (max-width: 768px) {{
+            .lists-wrapper {{
+                flex-direction: column; 
+            }}
+        }}
+
         @media (max-width: 480px) {{
             .user-card {{
                 padding: 12px;
@@ -355,27 +371,27 @@ def generate_html(developer_data: list[dict], users_data: list[dict], sponsors_d
             <div class="stats">
                 <div class="stat-item">전체 {total_count}명</div>
                 <div class="stat-item">협찬사 {len(sponsors_data)}곳</div>
+                <div class="stat-item">협찬사 {len(users_data)}곳</div>
             </div>
         </header>
-        
-        <!-- 개발자 섹션 -->
-        <h2 class="section-title">👨‍💻 만들어준 사람</h2>
-        <div class="user-list">
-            {create_user_cards(developer_data)}
-        </div>
-        
-        <!-- 협찬사 섹션 -->
-        <h2 class="section-title">🤝 협찬사 ({len(sponsors_data)})</h2>
-        <div class="user-list">
-            {create_user_cards(sponsors_data)}
-        </div>
+        <div class="lists-wrapper">
 
-        <!-- 일반 참여자 섹션 -->
-        <h2 class="section-title">👥 참여자 목록 ({len(users_data)})</h2>
-        <div class="user-list">
-            {create_user_cards(users_data)}
+            <div class="list-section">
+                <!-- 협찬사 섹션 -->
+                <h2 class="section-title">🤝 협찬사 ({len(sponsors_data)})</h2>
+                <div class="user-list">
+                    {create_user_cards(sponsors_data)}
+                </div>
+            </div>
+
+            <div class="list-section">
+                <!-- 일반 참여자 섹션 -->
+                <h2 class="section-title">👥 참여자 목록 ({len(users_data)})</h2>
+                <div class="user-list">
+                    {create_user_cards(users_data)}
+                </div>
+            </div>
         </div>
-        
         <footer>
             <p>Powered by Instagram Follower Tracker</p>
         </footer>
