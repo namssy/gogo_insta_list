@@ -371,7 +371,7 @@ def generate_html(developer_data: list[dict], users_data: list[dict], sponsors_d
             <div class="stats">
                 <div class="stat-item">전체 {total_count}명</div>
                 <div class="stat-item">협찬사 {len(sponsors_data)}곳</div>
-                <div class="stat-item">협찬사 {len(users_data)}곳</div>
+                <div class="stat-item">참여자 {len(users_data)}명</div>
             </div>
         </header>
         <div class="lists-wrapper">
