@@ -160,7 +160,7 @@ def generate_html(developer_data: list[dict], users_data: list[dict], sponsors_d
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>팔로우 필요 목록</title>
+    <title>1월용궁신년회</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&display=swap" rel="stylesheet">
@@ -375,21 +375,6 @@ def generate_html(developer_data: list[dict], users_data: list[dict], sponsors_d
             </div>
         </header>
         <div class="lists-wrapper">
-
-            <div class="list-section">
-                <!-- 개발자 섹션 -->
-                <h2 class="section-title">👨‍💻 개발자 ({len(developer_data)})</h2>
-                <div class="user-list">
-                    {create_user_cards(developer_data)}
-                </div>
-
-                <!-- 협찬사 섹션 -->
-                <h2 class="section-title">🤝 협찬사 ({len(sponsors_data)})</h2>
-                <div class="user-list">
-                    {create_user_cards(sponsors_data)}
-                </div>
-            </div>
-
             <div class="list-section">
                 <!-- 일반 참여자 섹션 -->
                 <h2 class="section-title">👥 참여자 목록 ({len(users_data)})</h2>
@@ -422,10 +407,10 @@ def main():
     
     # 목록 로드
     target_list = load_users("users.txt")
-    sponsors_list = load_users("sponsors.txt")
-    developers_list = load_users("developers.txt")
+    # sponsors_list = load_users("sponsors.txt")
+    # developers_list = load_users("developers.txt")
     
-    print(f"\n📋 사용자: {len(target_list)}명 / 협찬사: {len(sponsors_list)}곳 / 개발자: {len(developers_list)}명\n")
+    print(f"\n📋 사용자: {len(target_list)}명\n")
     
     # Instaloader 인스턴스 생성 (로그인 없이)
     L = instaloader.Instaloader()
@@ -445,18 +430,19 @@ def main():
 
     users_data = []
     sponsors_data = []
+    developer_data = []
     
-    # 협찬사 처리
-    print("\n[1] 협찬사 정보 수집 중...")
-    for i, username in enumerate(sponsors_list, 1):
-        print(f"[{i}/{len(sponsors_list)}] {username} 처리 중...")
-        info, is_cached = fetch_user_data(username, L, assets_dir, cache, cache_file)
-        sponsors_data.append(info)
-        if not is_cached:
-            time.sleep(5) # 캐시가 아닐 때만 대기
+    # # 협찬사 처리
+    # print("\n[1] 협찬사 정보 수집 중...")
+    # for i, username in enumerate(sponsors_list, 1):
+    #     print(f"[{i}/{len(sponsors_list)}] {username} 처리 중...")
+    #     info, is_cached = fetch_user_data(username, L, assets_dir, cache, cache_file)
+    #     sponsors_data.append(info)
+    #     if not is_cached:
+    #         time.sleep(5) # 캐시가 아닐 때만 대기
 
     # 사용자 처리
-    print("\n[2] 사용자 정보 수집 중...")
+    print("\n[1] 사용자 정보 수집 중...")
     for i, username in enumerate(target_list, 1):
         print(f"[{i}/{len(target_list)}] {username} 처리 중...")
         info, is_cached = fetch_user_data(username, L, assets_dir, cache, cache_file)
@@ -466,20 +452,19 @@ def main():
         if i < len(target_list) and not is_cached:
             time.sleep(5)
     
-    # 개발자 정보 수집
-    print("\n[3] 개발자 정보 수집 중...")
-    developer_data = []
-    for i, username in enumerate(developers_list, 1):
-        print(f"[{i}/{len(developers_list)}] {username} 처리 중...")
-        info, is_cached = fetch_user_data(username, L, assets_dir, cache, cache_file)
-        developer_data.append(info)
-        if i < len(developers_list) and not is_cached:
-            time.sleep(5)
+    # # 개발자 정보 수집
+    # print("\n[2] 개발자 정보 수집 중...")
+    # for i, username in enumerate(developers_list, 1):
+    #     print(f"[{i}/{len(developers_list)}] {username} 처리 중...")
+    #     info, is_cached = fetch_user_data(username, L, assets_dir, cache, cache_file)
+    #     developer_data.append(info)
+    #     if i < len(developers_list) and not is_cached:
+    #         time.sleep(5)
 
     # HTML 생성
     print("\n📝 HTML 파일 생성 중...")
     
-    total_count = len(target_list) + len(sponsors_list) + len(developers_list)
+    total_count = len(target_list)  # + len(sponsors_list) + len(developers_list)
     
     html_content = generate_html(developer_data, users_data, sponsors_data, total_count)
     

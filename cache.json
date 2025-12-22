@@ -508,5 +508,101 @@
     "success": true,
     "full_name": "-",
     "is_private": true
+  },
+  "funkihun": {
+    "username": "funkihun",
+    "success": true,
+    "full_name": "김기훈 | 프리다이빙 & 스쿠버다이빙 강사 |",
+    "is_private": false
+  },
+  "bly_dani_02": {
+    "username": "bly_dani_02",
+    "success": true,
+    "full_name": "🪼DANI🧜‍♀️mermaid instructor🦭 민다은🪼",
+    "is_private": false
+  },
+  "som.blue": {
+    "username": "som.blue",
+    "success": true,
+    "full_name": "",
+    "is_private": false
+  },
+  "hmmh.x_x": {
+    "username": "hmmh.x_x",
+    "success": true,
+    "full_name": "혜미(미미) | Mermaid 강사 | MOANA 팀장 | ᯓᡣ𐭩",
+    "is_private": false
+  },
+  "ceobokjin6": {
+    "username": "ceobokjin6",
+    "success": true,
+    "full_name": "최복진",
+    "is_private": false
+  },
+  "sk.kim8105": {
+    "username": "sk.kim8105",
+    "success": true,
+    "full_name": "김수경",
+    "is_private": true
+  },
+  "hhong2_2gnohh": {
+    "username": "hhong2_2gnohh",
+    "success": true,
+    "full_name": "홍진선",
+    "is_private": true
+  },
+  "hamjungjin": {
+    "username": "hamjungjin",
+    "success": true,
+    "full_name": "함정진",
+    "is_private": true
+  },
+  "stellar.blingme": {
+    "username": "stellar.blingme",
+    "success": true,
+    "full_name": "",
+    "is_private": false
+  },
+  "hyunha_sz": {
+    "username": "hyunha_sz",
+    "success": true,
+    "full_name": "효나(Henna) | Mermaid강사🧜‍♀️",
+    "is_private": false
+  },
+  "mermaid.merry_": {
+    "username": "mermaid.merry_",
+    "success": true,
+    "full_name": "",
+    "is_private": false
+  },
+  "peanut_freediver": {
+    "username": "peanut_freediver",
+    "success": true,
+    "full_name": "최지양 I 프리다이빙 강사 🐳",
+    "is_private": false
+  },
+  "i_jangmi_": {
+    "username": "i_jangmi_",
+    "success": true,
+    "full_name": "이장미",
+    "is_private": true
+  },
+  "pinksol0406": {
+    "username": "pinksol0406",
+    "success": true,
+    "full_name": "핑크소리",
+    "is_private": true
+  },
+  "ys._.se": {
+    "username": "ys._.se",
+    "success": true,
+    "full_name": "yeseul",
+    "is_private": true
+  },
+  "yeaji323232": {
+    "username": "yeaji323232",
+    "success": true,
+    "full_name": "설윤정",
+    "is_private": false
   }
 }

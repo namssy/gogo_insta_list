@@ -1,5 +1,2 @@
 # Instagram Follower Tracker - 개발자 목록
 # 한 줄에 하나의 사용자명을 입력하세요
-
-yeoriyeori
-jjuuuunn.hob
