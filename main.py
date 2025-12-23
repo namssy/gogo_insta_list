@@ -366,12 +366,10 @@ def generate_html(developer_data: list[dict], users_data: list[dict], sponsors_d
 <body>
     <div class="container">
         <header>
-            <h1>🚀 팔로우 필요 목록</h1>
+            <h1>🧜‍♀️1월용궁신년회🧜‍♂️</h1>
             <p>마지막 업데이트: {now}</p>
             <div class="stats">
-                <div class="stat-item">전체 {total_count}명</div>
-                <div class="stat-item">협찬사 {len(sponsors_data)}곳</div>
-                <div class="stat-item">참여자 {len(users_data)}명</div>
+                <div class="stat-item">전체 {total_count}명</div>                
             </div>
         </header>
         <div class="lists-wrapper">

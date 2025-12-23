@@ -604,5 +604,11 @@
     "success": true,
     "full_name": "설윤정",
     "is_private": false
+  },
+  "lucia_sunnyee": {
+    "username": "lucia_sunnyee",
+    "success": true,
+    "full_name": "Lucia",
+    "is_private": false
   }
 }

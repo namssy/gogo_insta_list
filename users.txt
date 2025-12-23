@@ -4,9 +4,9 @@
 
 # 예시 계정들 (원하는 계정으로 수정하세요)
 @bookae_2021
+@yeoriyeori
 @funkihun
 @sunnyo_oa
-@yeoriyeori
 @23.baoh
 @bly_dani_02
 @bono_dive
@@ -31,3 +31,4 @@
 @pinksol0406
 @ys._.se
 @yeaji323232
+@lucia_sunnyee
